@@ -105,7 +105,73 @@ defineExpose({
   globalLoading,
 });
 </script>
+<script lang="ts">
+// 全局类型定义
+export interface NotificationEvent {
+  detail: {
+    title?: string;
+    message: string;
+    type?: 'success' | 'warning' | 'info' | 'error';
+  };
+}
 
+// 全局工具函数
+export const showError = (message: string) => {
+  const event = new CustomEvent('show-notification', {
+    detail: {
+      title: '错误',
+      message,
+      type: 'error',
+    },
+  });
+  window.dispatchEvent(event);
+};
+
+export const showSuccess = (message: string) => {
+  const event = new CustomEvent('show-notification', {
+    detail: {
+      title: '成功',
+      message,
+      type: 'success',
+    },
+  });
+  window.dispatchEvent(event);
+};
+
+export const showWarning = (message: string) => {
+  const event = new CustomEvent('show-notification', {
+    detail: {
+      title: '警告',
+      message,
+      type: 'warning',
+    },
+  });
+  window.dispatchEvent(event);
+};
+
+export const showInfo = (message: string) => {
+  const event = new CustomEvent('show-notification', {
+    detail: {
+      title: '提示',
+      message,
+      type: 'info',
+    },
+  });
+  window.dispatchEvent(event);
+};
+
+// 森林主题工具函数
+export const getForestColors = () => {
+  return {
+    primary: '#88c9a1', // LightGreen
+    secondary: '#7a6455', // 深棕色
+    accent: '#5d9c73', // 中绿色
+    background: '#f5f5f5', // 浅灰色
+    text: '#212121', // 黑色
+    white: '#ffffff', // 白色
+  };
+};
+</script>
 <style lang="scss">
 // 森林主题颜色变量
 $forest-green-light: #88c9a1; // LightGreen - 浅绿色 (树叶)
@@ -647,71 +713,3 @@ body {
   }
 }
 </style>
-
-<script lang="ts">
-// 全局类型定义
-export interface NotificationEvent {
-  detail: {
-    title?: string;
-    message: string;
-    type?: 'success' | 'warning' | 'info' | 'error';
-  };
-}
-
-// 全局工具函数
-export const showError = (message: string) => {
-  const event = new CustomEvent('show-notification', {
-    detail: {
-      title: '错误',
-      message,
-      type: 'error',
-    },
-  });
-  window.dispatchEvent(event);
-};
-
-export const showSuccess = (message: string) => {
-  const event = new CustomEvent('show-notification', {
-    detail: {
-      title: '成功',
-      message,
-      type: 'success',
-    },
-  });
-  window.dispatchEvent(event);
-};
-
-export const showWarning = (message: string) => {
-  const event = new CustomEvent('show-notification', {
-    detail: {
-      title: '警告',
-      message,
-      type: 'warning',
-    },
-  });
-  window.dispatchEvent(event);
-};
-
-export const showInfo = (message: string) => {
-  const event = new CustomEvent('show-notification', {
-    detail: {
-      title: '提示',
-      message,
-      type: 'info',
-    },
-  });
-  window.dispatchEvent(event);
-};
-
-// 森林主题工具函数
-export const getForestColors = () => {
-  return {
-    primary: '#88c9a1', // LightGreen
-    secondary: '#7a6455', // 深棕色
-    accent: '#5d9c73', // 中绿色
-    background: '#f5f5f5', // 浅灰色
-    text: '#212121', // 黑色
-    white: '#ffffff', // 白色
-  };
-};
-</script>
