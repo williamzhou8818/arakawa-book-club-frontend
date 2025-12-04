@@ -141,6 +141,13 @@
                   >2024年12月15日（日）14:00-16:00</span
                 >
               </div>
+              <div class="flex items-center mb-4">
+                <span class="px-3 text-gray-800 text-sm font-medium">
+                  <el-icon class="mr-2 mt-0.5"><Location /></el-icon>
+
+                  ゆいの森あらかわ（中央図書館）
+                </span>
+              </div>
               <h3 class="text-2xl font-bold text-gray-900 mb-3">
                 『人生を変える読書術』著者対談会
               </h3>
@@ -187,6 +194,13 @@
                 <span class="text-green-600 font-medium"
                   >2024年12月20日（金）19:00-21:00</span
                 >
+              </div>
+              <div class="flex items-center mb-4">
+                <span class="px-3 text-gray-800 text-sm font-medium">
+                  <el-icon class="mr-2 mt-0.5"><Location /></el-icon>
+
+                  ゆいの森あらかわ（中央図書館）
+                </span>
               </div>
               <h3 class="text-2xl font-bold text-gray-900 mb-3">
                 哲学的対話：「幸福とは何か」
@@ -342,11 +356,6 @@
                 <div
                   class="bg-white p-6 rounded-2xl shadow-md border border-gray-100"
                 >
-                  <div
-                    class="hidden md:block absolute -left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white font-bold"
-                  >
-                    1
-                  </div>
                   <h3 class="text-xl font-bold text-gray-900 mb-3">
                     イベントを選ぶ
                   </h3>
@@ -374,11 +383,6 @@
                 <div
                   class="bg-white p-6 rounded-2xl shadow-md border border-gray-100"
                 >
-                  <div
-                    class="hidden md:block absolute -left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white font-bold"
-                  >
-                    2
-                  </div>
                   <h3 class="text-xl font-bold text-gray-900 mb-3">本を読む</h3>
                   <p class="text-gray-600 mb-4">
                     指定された本を事前に読んでおきます。必ず全文を読む必要はなく、興味のある章だけでもOKです。
@@ -404,11 +408,6 @@
                 <div
                   class="bg-white p-6 rounded-2xl shadow-md border border-gray-100"
                 >
-                  <div
-                    class="hidden md:block absolute -left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white font-bold"
-                  >
-                    3
-                  </div>
                   <h3 class="text-xl font-bold text-gray-900 mb-3">参加する</h3>
                   <p class="text-gray-600 mb-4">
                     現地またはオンラインで参加。自己紹介から始まり、和やかな雰囲気でディスカッションを行います。
@@ -434,11 +433,6 @@
                 <div
                   class="bg-white p-6 rounded-2xl shadow-md border border-gray-100"
                 >
-                  <div
-                    class="hidden md:block absolute -left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white font-bold"
-                  >
-                    4
-                  </div>
                   <h3 class="text-xl font-bold text-gray-900 mb-3">繋がる</h3>
                   <p class="text-gray-600 mb-4">
                     気の合う仲間ができたら、今後のイベントや自主的な読書グループに参加することもできます。
@@ -488,6 +482,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { Location } from '@element-plus/icons-vue';
 
 const recentParticipants = ref([1, 2, 3, 4, 5]);
 </script>

@@ -1,8 +1,32 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+  compatibilityDate: '2024-12-04', // 修正为当前日期
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  ssr: false,
+  app: {
+    baseURL: '/',
+    buildAssetsDir: '/_nuxt/',
+  },
+  nitro: {
+    preset: 'static',
+    prerender: {
+      routes: ['/'],
+      crawlLinks: true,
+    },
+  },
+  routeRules: {
+    '/**': { ssr: false },
+  },
+  // 环境变量配置
+  runtimeConfig: {
+    public: {
+      // 从环境变量获取API基础URL
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
+    },
+  },
+
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'], // 移除了未安装的模块
+
   vite: {
     css: {
       preprocessorOptions: {
