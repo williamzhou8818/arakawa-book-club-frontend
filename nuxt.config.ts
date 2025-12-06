@@ -20,6 +20,7 @@ export default defineNuxtConfig({
   // 环境变量配置
   runtimeConfig: {
     public: {
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3001',
       // 从环境变量获取API基础URL
       apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
     },

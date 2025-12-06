@@ -3,7 +3,7 @@
     <div class="header-container">
       <!-- LOGO -->
       <NuxtLink to="/" class="logo">
-        <span class="logo-text">読書会</span>
+        <span class="logo-text">大人のゆるい読書会</span>
       </NuxtLink>
 
       <!-- Desktop Nav -->
@@ -139,12 +139,12 @@ const navItems = [
 /* Logo样式 */
 .logo {
   display: flex;
-  align-items: center;
+  align-items: left;
   text-decoration: none;
 }
 
 .logo-text {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   background: linear-gradient(135deg, #10b981, #059669);
   -webkit-background-clip: text;

@@ -115,139 +115,7 @@
     </section>
 
     <!-- Upcoming Events Preview -->
-    <section class="py-16 bg-gradient-to-b from-green-50 to-white">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">
-            今月の注目イベント
-          </h2>
-          <p class="text-gray-600 max-w-2xl mx-auto">
-            特別ゲストを招いた対談や、テーマ別に深く掘り下げる読書会を多数開催しています。
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div
-            class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300"
-          >
-            <div class="p-6">
-              <div class="flex items-center mb-4">
-                <span
-                  class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium mr-3"
-                >
-                  限定イベント
-                </span>
-                <span class="text-green-600 font-medium"
-                  >2024年12月15日（日）14:00-16:00</span
-                >
-              </div>
-              <div class="flex items-center mb-4">
-                <span class="px-3 text-gray-800 text-sm font-medium">
-                  <el-icon class="mr-2 mt-0.5"><Location /></el-icon>
-
-                  ゆいの森あらかわ（中央図書館）
-                </span>
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900 mb-3">
-                『人生を変える読書術』著者対談会
-              </h3>
-              <p class="text-gray-600 mb-4">
-                話題のベストセラー著者をゲストに迎え、読書を通じた自己変革の秘訣について深く語り合います。参加者からの質問も受け付けます。
-              </p>
-              <div class="flex items-center justify-between">
-                <div class="flex -space-x-3">
-                  <img
-                    v-for="i in 3"
-                    :key="i"
-                    :src="`https://i.pravatar.cc/150?img=${i + 10}`"
-                    class="w-10 h-10 rounded-full border-2 border-white"
-                    alt="参加者"
-                  />
-                  <div
-                    class="w-10 h-10 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-gray-500"
-                  >
-                    +28
-                  </div>
-                </div>
-                <el-button
-                  type="primary"
-                  size="small"
-                  @click="$router.push('/schedule')"
-                  class="bg-green-600 hover:bg-green-700"
-                >
-                  予約する
-                </el-button>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300"
-          >
-            <div class="p-6">
-              <div class="flex items-center mb-4">
-                <span
-                  class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-medium mr-3"
-                >
-                  人気イベント
-                </span>
-                <span class="text-green-600 font-medium"
-                  >2024年12月20日（金）19:00-21:00</span
-                >
-              </div>
-              <div class="flex items-center mb-4">
-                <span class="px-3 text-gray-800 text-sm font-medium">
-                  <el-icon class="mr-2 mt-0.5"><Location /></el-icon>
-
-                  ゆいの森あらかわ（中央図書館）
-                </span>
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900 mb-3">
-                哲学的対話：「幸福とは何か」
-              </h3>
-              <p class="text-gray-600 mb-4">
-                古典的な哲学書を題材に、現代社会における「幸福」のあり方について、参加者全員で対話型ディスカッションを行います。
-              </p>
-              <div class="flex items-center justify-between">
-                <div class="flex -space-x-3">
-                  <img
-                    v-for="i in 3"
-                    :key="i"
-                    :src="`https://i.pravatar.cc/150?img=${i + 15}`"
-                    class="w-10 h-10 rounded-full border-2 border-white"
-                    alt="参加者"
-                  />
-                  <div
-                    class="w-10 h-10 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-gray-500"
-                  >
-                    +42
-                  </div>
-                </div>
-                <el-button
-                  type="primary"
-                  size="small"
-                  @click="$router.push('/schedule')"
-                  class="bg-green-600 hover:bg-green-700"
-                >
-                  予約する
-                </el-button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-center mt-8">
-          <el-button
-            type="info"
-            @click="$router.push('/schedule')"
-            class="px-6 py-3 border-2 border-green-600 text-green-700 hover:bg-green-50 transition-all duration-300"
-          >
-            すべてのイベントを見る
-          </el-button>
-        </div>
-      </div>
-    </section>
-
+    <EventsSection />
     <!-- Testimonials Section -->
     <section class="py-16 bg-white">
       <div class="container mx-auto px-4">
@@ -482,7 +350,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Location } from '@element-plus/icons-vue';
 
 const recentParticipants = ref([1, 2, 3, 4, 5]);
 </script>
