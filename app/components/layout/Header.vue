@@ -29,7 +29,7 @@
 
       <!-- Desktop Primary Button only -->
       <div class="desktop-actions">
-        <el-button type="primary" class="primary-btn">今月のイベント</el-button>
+        <!-- <el-button type="primary" class="primary-btn">今月のイベント</el-button> -->
       </div>
 
       <!-- Mobile Menu Button - fixed icon display -->
@@ -81,13 +81,13 @@
         </div>
 
         <div class="mobile-footer">
-          <el-button
+          <!-- <el-button
             type="primary"
             class="mobile-primary-btn"
             @click="mobileMenuOpen = false"
           >
             今月のイベント
-          </el-button>
+          </el-button> -->
         </div>
       </div>
     </el-drawer>
@@ -106,7 +106,7 @@ const activeLink = ref(null);
 const navItems = [
   { name: 'ホーム', path: '/' },
   { name: 'ご案内', path: '/guide' },
-  { name: 'スケジュール・お申し込み', path: '/schedule' },
+  { name: 'スケジュール・予約', path: '/schedule' },
   { name: 'よくある質問', path: '/faq' },
   { name: 'お問い合わせ', path: '/contact' },
 ];

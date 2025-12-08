@@ -44,8 +44,10 @@
                 {{ event.tag }}
               </span>
               <span class="text-green-600 font-medium">
-                {{ formatDate(event.start_time) }}</span
-              >
+                {{ formatDateOnly(event.start_time) }}
+                {{ formatTimeOnly(event.start_time) }} ~
+                {{ formatTimeOnly(event.end_time) }}
+              </span>
             </div>
             <div class="flex items-center mb-4">
               <span class="px-3 text-gray-800 text-sm font-medium">
@@ -79,7 +81,7 @@
               <el-button
                 type="primary"
                 size="small"
-                @click="$router.push('/schedule')"
+                @click="$router.push(`/schedule/${event.id}`)"
                 class="bg-green-600 hover:bg-green-700"
               >
                 予約する
@@ -120,15 +122,24 @@ const getTagClass = (tag) => {
   return tagClasses[tag] || 'bg-gray-100 text-gray-800';
 };
 
-const formatDate = (dateString) => {
+// 日付部分のみフォーマット (年月日と曜日)
+const formatDateOnly = (dateString) => {
   const date = new Date(dateString);
+  const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
+
+  return `${year}年${month}月${day}日（${dayOfWeek}）`;
+};
+
+// 時刻部分のみフォーマット (HH:mm)
+const formatTimeOnly = (dateString) => {
+  const date = new Date(dateString);
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
 
-  return `${date.getFullYear()}年${month}月${day}日（${dayOfWeek}）${hours}:${minutes}`;
+  return `${hours}:${minutes}`;
 };
 
 // 参加者数をランダムに生成（実際のAPIに参加者数フィールドがあればそちらを使用）

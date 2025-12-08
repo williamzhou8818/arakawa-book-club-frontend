@@ -19,7 +19,26 @@ export const useEventsApi = () => {
       return [];
     }
   };
+
+  const getEventById = async (id: string) => {
+    try {
+      const response = await fetch(`${baseUrl}/api/events/${id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch event');
+      }
+      const data = await response.json();
+      if (data.success) {
+        return data.data;
+      } else {
+        throw new Error(data.message || 'Event not found');
+      }
+    } catch (error) {
+      console.error('Error fetching event by ID:', error);
+      throw error;
+    }
+  };
   return {
     getEvents,
+    getEventById,
   };
 };
