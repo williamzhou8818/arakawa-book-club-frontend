@@ -37,8 +37,27 @@ export const useEventsApi = () => {
       throw error;
     }
   };
+  const getRemainingSpots = async (id: string) => {
+    try {
+      const response = await fetch(`${baseUrl}/api/events/${id}/remaining`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch getRemainingSpots');
+      }
+      const data = await response.json();
+
+      if (data.success) {
+        return data;
+      } else {
+        throw new Error(data.message || 'Event not found');
+      }
+    } catch (error) {
+      console.error('Error fetching getRemainingSpots by ID:', error);
+      throw error;
+    }
+  };
   return {
     getEvents,
     getEventById,
+    getRemainingSpots,
   };
 };

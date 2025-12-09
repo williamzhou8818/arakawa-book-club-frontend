@@ -105,7 +105,9 @@
               >
                 <div class="text-4xl font-bold mb-1">{{ remainingSpots }}</div>
                 <div class="text-lg font-medium">残り席</div>
-                <div class="text-sm opacity-80">定員: {{ capacity }}名</div>
+                <div class="text-sm opacity-80">
+                  定員: {{ event.capacity }}名
+                </div>
               </div>
             </div>
           </div>
@@ -425,7 +427,10 @@ import {
   CircleCheckFilled,
   UserFilled,
 } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 import { useEventsApi } from '~/composables/useEventsApi';
+import { useReservation } from '~/composables/useReservation';
+const reservation = useReservation();
 
 const route = useRoute();
 const router = useRouter();
@@ -435,14 +440,13 @@ const event = ref(null);
 const showInviteModal = ref(false);
 const showSuccessModal = ref(false);
 const isSubmitting = ref(false);
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const japanPhoneRegex = /^(0[5-9]0)(-?\d{4})(-?\d{4})$/;
 
 // ダミーデータ（実際にはAPIから取得）
-const capacity = 50;
+const capacity = ref(50);
 const participantCount = ref(28);
-const participants = Array.from(
-  { length: Math.min(8, participantCount.value) },
-  (_, i) => i + 1,
-);
 
 // 予約フォーム
 const reservationForm = ref({
@@ -455,8 +459,14 @@ const reservationForm = ref({
 // 認証状態（ダミー）
 const isAuthenticated = ref(true);
 
+const participants = computed(() => {
+  const total = participantCount.value;
+  const displayCount = Math.min(5, total); // 顯示前5個
+  return Array.from({ length: displayCount }, (_, i) => i + 1);
+});
+
 const remainingSpots = computed(() => {
-  return capacity - participantCount.value;
+  return Math.max(0, capacity.value - participantCount.value);
 });
 
 const inviteUrl = computed(() => {
@@ -505,6 +515,20 @@ const copyInviteUrl = async () => {
 };
 
 const submitReservation = async () => {
+  // ---- 追加：Emailチェック ----
+  if (!emailRegex.test(reservationForm.value.email)) {
+    ElMessage.warning('正しいメールアドレスを入力してください');
+    return;
+  }
+  // ---- 追加：日本の電話番号チェック ----
+  if (!japanPhoneRegex.test(reservationForm.value.phone)) {
+    ElMessage.warning(
+      '正しい日本の電話番号を入力してください（例: 090-1234-5678）',
+    );
+    return;
+  }
+
+  // 残り席チェック
   if (remainingSpots.value < reservationForm.value.guestCount) {
     ElMessage.warning('残り席が不足しています');
     return;
@@ -523,20 +547,33 @@ const submitReservation = async () => {
     isSubmitting.value = true;
 
     // ここで実際の予約APIを呼び出します
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // await new Promise((resolve) => setTimeout(resolve, 1500));
+    const res = await reservation.submit({
+      event_id: event.value.id,
+      name: reservationForm.value.name,
+      email: reservationForm.value.email,
+      phone: reservationForm.value.phone,
+      guest_count: reservationForm.value.guestCount,
+    });
+    if (res.success) {
+      // 予約成功
 
-    // 予約成功
-    participantCount.value += reservationForm.value.guestCount;
+      const totalReserved = await fetchRemainingSpots();
+      if (totalReserved) {
+        participantCount.value = totalReserved.reserved;
+      }
 
-    // フォームをリセット
-    reservationForm.value = {
-      name: '',
-      email: '',
-      phone: '',
-      guestCount: 1,
-    };
-
-    showSuccessModal.value = true;
+      // フォームをリセット
+      reservationForm.value = {
+        name: '',
+        email: '',
+        phone: '',
+        guestCount: 1,
+      };
+      showSuccessModal.value = true;
+    } else {
+      ElMessage.error(res.message);
+    }
   } catch (err) {
     console.error('Reservation failed:', err);
     ElMessage.error('予約に失敗しました。もう一度お試しください。');
@@ -550,6 +587,25 @@ const closeSuccessModal = () => {
   // 必要に応じてページをリロードまたは状態を更新
 };
 
+const fetchRemainingSpots = async () => {
+  try {
+    loading.value = true;
+    error.value = null;
+    const api = useEventsApi();
+    const data = await api.getRemainingSpots(route.params.id);
+    if (data.success) {
+      capacity.value = data.capacity;
+      participantCount.value = data.reserved;
+    }
+    loading.value = false;
+  } catch (err) {
+    console.error('Error fetching event capacity:', err);
+    error.value = err.message || '情報の取得に失敗しました';
+  } finally {
+    loading.value = false;
+  }
+};
+
 const fetchEvent = async () => {
   try {
     loading.value = true;
@@ -557,6 +613,7 @@ const fetchEvent = async () => {
 
     const api = useEventsApi();
     event.value = await api.getEventById(route.params.id);
+    capacity.value = event.value.capacity;
 
     if (!event.value) {
       throw new Error('イベントが見つかりません');
@@ -569,7 +626,10 @@ const fetchEvent = async () => {
   }
 };
 
-onMounted(fetchEvent);
+onMounted(async () => {
+  await fetchEvent(); // 获取活动基本信息
+  await fetchRemainingSpots(); // 获取真实剩余名额
+});
 </script>
 
 <style scoped>
